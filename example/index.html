@@ -1,0 +1,18 @@
+<html>
+<head>
+	<script src="https://unpkg.com/vue@3"></script>
+</head>
+<body>
+<div id="app">
+</div>
+<script type="module">
+	import One from './components/one.js'
+
+	const app = Vue.createApp({
+		components: { One },
+		template: '<div>ROOT Component</div><One />'
+	})
+	app.mount('#app')
+</script>
+</body>
+</html>
