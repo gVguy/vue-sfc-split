@@ -42,8 +42,11 @@ npm run split
 
 ## Options
 `--ignore` patterns to ignore directories
+
 `--noscope` ignore scoped css, and treat it like usual css
+
 `--dest` destination folder
+
 `--tab` this will be used to indent template entry in script
 
 ### --ignore
