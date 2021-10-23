@@ -14,25 +14,23 @@ const htmlparser = require('node-html-parser')
 
 const args = minimist(process.argv.slice(2))
 const opts = {
-  tab: '  ',
   ignore: ['node_modules/**'],
   noscope: false,
   dest: 'dist/',
 }
 
-opts.tab = args.tab != undefined ? args.tab : opts.tab
 opts.ignore = args.ignore ? opts.ignore.concat(args.ignore.split(',')) : opts.ignore
-opts.dest = args.dest
-            ? args.dest.slice(-1) != '/'
+opts.dest = args.dest != undefined
+            ? args.dest && args.dest.slice(-1) != '/'
               ? args.dest+'/'
               : args.dest
             : opts.dest
 opts.noscope = args.noscope ? true : false
 
+const tab = '  '
 
 
 const files = glob.sync('**/*.vue', { ignore: opts.ignore })
-
 
 files.forEach(file => {
 
@@ -182,7 +180,7 @@ files.forEach(file => {
       if (match) {
         // there is a default export, append template to it
         script = script.replace(
-          match[0], match[0] + '\n' + opts.tab + templateString
+          match[0], match[0] + '\n' + tab + templateString
         )
       } else {
         warnings.push('can\'t find default export')
