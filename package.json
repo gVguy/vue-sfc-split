@@ -1,13 +1,15 @@
 {
   "name": "vue-sfc-split",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert SFCs for use without build",
   "homepage": "https://github.com/gVguy/vue-sfc-split#vue-sfc-split",
   "repository": "https://github.com/gVguy/vue-sfc-split",
   "bugs": "https://github.com/gVguy/vue-sfc-split/issues",
   "main": "convert.js",
   "bin": "convert.js",
-  "files": ["convert.js"],
+  "files": [
+    "convert.js"
+  ],
   "scripts": {
     "serve": "http-server ./",
     "build": "node convert.js --dest=example_output --alias=@:example_input/components --entry=example_input --publicPath=."
