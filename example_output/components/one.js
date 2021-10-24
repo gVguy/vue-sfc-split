@@ -1,5 +1,5 @@
-import Two from 'two.js'
-import DeeperTwo from 'depth/two.js'
+import Two from './two.js'
+import DeeperTwo from './depth/two.js'
 
 export default {
   template: `
@@ -22,4 +22,4 @@ export default {
 }
 
 // attach styles
-fetch('example_input/components/one.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))
+fetch('example_output/components/one.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))

@@ -41,7 +41,9 @@ files.forEach(file => {
 
   const pathParse = path.parse(file)
   const dirRelativeToEntry = path.relative(opts.entry, pathParse.dir)
-  const dirRelativeToPublic = path.relative(opts.publicPath, pathParse.dir)
+  const outDir = opts.dest + '/' + dirRelativeToEntry
+  const dirRelativeToPublic = path.relative(opts.publicPath, outDir)
+  const outPath = outDir + '/' + pathParse.name
 
   const scopeSelectors = []
 
@@ -55,7 +57,7 @@ files.forEach(file => {
     // parse
 
     const parsed = compiler.parseComponent(content)
-    console.log(parsed.script)
+
 
     // extract
 
@@ -213,7 +215,7 @@ files.forEach(file => {
             let newStatement = statement.replace(a, opts.alias[a])
             const absPath = newStatement.match(/(import.*)['"](.*)(['"])/)[2]
             const relPath = path.relative(pathParse.dir, absPath)
-            newStatement = newStatement.replace(absPath, relPath)
+            newStatement = newStatement.replace(absPath, './'+relPath)
             script = script.replace(statement, newStatement)
           })
         }
@@ -227,10 +229,7 @@ files.forEach(file => {
 
     // write files
 
-    const dir = opts.dest + '/' + dirRelativeToEntry
-    const outPath = dir + '/' + pathParse.name
-
-    fs.mkdir(dir, { recursive: true }, (err) => {
+    fs.mkdir(outDir, { recursive: true }, (err) => {
       if (err) return console.log(err)
 
         if (script) {

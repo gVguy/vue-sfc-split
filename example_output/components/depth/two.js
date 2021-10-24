@@ -1,4 +1,4 @@
-import Two from '../two.js'
+import Two from './../two.js'
 
 export default {
   template: `
@@ -12,7 +12,7 @@ export default {
    <Two></Two>
 </div>`,
    name: 'DeeperTwo',
-   components: { Two }
+   components: { Two },
    data() {
       return {
          text: 'Hello from a level deeper Component!'
@@ -21,4 +21,4 @@ export default {
 }
 
 // attach styles
-fetch('example_input/components/depth/two.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))
+fetch('example_output/components/depth/two.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))

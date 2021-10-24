@@ -20,4 +20,4 @@ export default {
 }
 
 // attach styles
-fetch('example_input/components/two.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))
+fetch('example_output/components/two.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))

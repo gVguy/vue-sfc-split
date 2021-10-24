@@ -16,7 +16,7 @@ import Two from '@/two.vue'
 
 export default {
    name: 'DeeperTwo',
-   components: { Two }
+   components: { Two },
    data() {
       return {
          text: 'Hello from a level deeper Component!'
