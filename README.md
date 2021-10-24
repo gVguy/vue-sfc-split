@@ -127,7 +127,7 @@ import Two from './two.vue'
 
 export default {
    name: 'One',
-   components: { Two, DeeperTwo },
+   components: { Two },
    data() {
       return {
          text: 'Hello from component One'
@@ -154,7 +154,7 @@ export default {
    <Two></Two>
 </div>`,
    name: 'One',
-   components: { Two, DeeperTwo },
+   components: { Two },
    data() {
       return {
          text: 'Hello from component One'
