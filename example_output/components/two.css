@@ -1,0 +1,16 @@
+.container[data-scope-example_input-components-two] {
+  background: gold;
+}
+
+.container[data-scope-example_input-components-two] h1[data-scope-example_input-components-two] {
+  color: white;
+}
+
+.container[data-scope-example_input-components-two] h1[data-scope-example_input-components-two]:hover {
+  background: black;
+}
+
+span[data-scope-example_input-components-two] {
+  color: purple;
+}
+

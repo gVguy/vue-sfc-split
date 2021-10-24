@@ -12,8 +12,8 @@
 
 <script>
 
-import Two from './two.vue'
-import DeeperTwo from './depth/two.vue'
+import Two from '@/two.vue'
+import DeeperTwo from '@/depth/two.vue'
 
 export default {
    name: 'One',

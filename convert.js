@@ -14,27 +14,34 @@ const htmlparser = require('node-html-parser')
 
 const args = minimist(process.argv.slice(2))
 const opts = {
+  entry: '',
+  publicPath: '',
   ignore: ['node_modules/**'],
   noscope: false,
-  dest: 'dist/',
+  alias: {},
+  dest: 'dist'
 }
 
+opts.entry = args.entry != undefined ? path.relative('./', args.entry) : opts.entry
+opts.publicPath = args.publicPath != undefined ? path.relative('./', args.publicPath) : opts.entry
 opts.ignore = args.ignore ? opts.ignore.concat(args.ignore.split(',')) : opts.ignore
-opts.dest = args.dest != undefined
-            ? args.dest && args.dest.slice(-1) != '/'
-              ? args.dest+'/'
-              : args.dest
-            : opts.dest
-opts.noscope = args.noscope ? true : false
+opts.noscope = args.noscope ? args.noscope : opts.noscope
+opts.dest = args.dest != undefined ? path.relative('./', args.dest) : opts.dest
+opts.alias = args.alias
+             ? Object.fromEntries(args.alias.split(',').map(a => a.split(':')))
+             : opts.alias
 
 const tab = '  '
 
 
-const files = glob.sync('**/*.vue', { ignore: opts.ignore })
+const pattern = (opts.entry ? opts.entry + '/' : '') + '/**/*.vue'
+const files = glob.sync(pattern, { ignore: opts.ignore })
 
 files.forEach(file => {
 
   const pathParse = path.parse(file)
+  const dirRelativeToEntry = path.relative(opts.entry, pathParse.dir)
+  const dirRelativeToPublic = path.relative(opts.publicPath, pathParse.dir)
 
   const scopeSelectors = []
 
@@ -48,7 +55,7 @@ files.forEach(file => {
     // parse
 
     const parsed = compiler.parseComponent(content)
-
+    console.log(parsed.script)
 
     // extract
 
@@ -159,7 +166,7 @@ files.forEach(file => {
 
       if (script) {
         // add style attachment to script
-        script += '\n\n// attach styles\nfetch(\''+pathParse.dir+'/'+pathParse.name+'.css\').then(res => res.text()).then(style => document.head.insertAdjacentHTML(\'beforeend\', \'<style>\'+style+\'</style>\'))'
+        script += '\n\n// attach styles\nfetch(\''+dirRelativeToPublic+'/'+pathParse.name+'.css\').then(res => res.text()).then(style => document.head.insertAdjacentHTML(\'beforeend\', \'<style>\'+style+\'</style>\'))'
       }
 
     } else {
@@ -191,15 +198,36 @@ files.forEach(file => {
     }
 
 
-    // rewrite imports
+    // script
+
     if (script) {
-      script = script.replace(/import(.*)\.vue(['"])/g, 'import$1.js$2')
+
+      // rewrite imports
+
+      // alias
+      for (let a in opts.alias) {
+        const regexAlias = new RegExp('(import.*from [\'"].*)'+a+'(.*[\'"])', 'g')
+        const match = script.match(regexAlias)
+        if (match) {
+          match.forEach(statement => {
+            let newStatement = statement.replace(a, opts.alias[a])
+            const absPath = newStatement.match(/(import.*)['"](.*)(['"])/)[2]
+            const relPath = path.relative(pathParse.dir, absPath)
+            newStatement = newStatement.replace(absPath, relPath)
+            script = script.replace(statement, newStatement)
+          })
+        }
+      }
+
+      // vue -> js
+      script = script.replace(/(import.*)\.vue(['"])/g, '$1.js$2')
+
     }
 
 
     // write files
 
-    const dir = opts.dest + pathParse.dir
+    const dir = opts.dest + '/' + dirRelativeToEntry
     const outPath = dir + '/' + pathParse.name
 
     fs.mkdir(dir, { recursive: true }, (err) => {

@@ -9,8 +9,8 @@
   "bin": "convert.js",
   "files": ["convert.js"],
   "scripts": {
-    "serve": "http-server ./example/",
-    "build": "node convert.js --dest=example"
+    "serve": "http-server ./",
+    "build": "node convert.js --dest=example_output --alias=@:example_input/components --entry=example_input --publicPath=."
   },
   "author": "Ivan Che",
   "license": "ISC",

@@ -16,17 +16,17 @@ Convert SFCs for use without build
 
 ### Global
 Install:
-```bash
+```shell
 npm i -g vue-sfc-split
 ```
 Run from project root:
-```bash
+```shell
 vue-sfc-split
 ```
 
 ### Local (npm scripts)
 Install:
-```bash
+```shell
 npm i vue-sfc-split
 ```
 Add npm script to `package.json`:
@@ -36,31 +36,61 @@ Add npm script to `package.json`:
 },
 ```
 Run from project root:
-```bash
+```shell
 npm run split
 ```
 
 ## Options
-`--ignore` patterns to ignore directories
+[`--entry`](#--entry) starting _directory_
 
-`--noscope` ignore scoped css, and treat it like usual css
+[`--publicPath`](#--publicPath) index of application
 
-`--dest` destination folder
+[`--ignore`](#--ignore) patterns to ignore directories
 
-`--tab` this will be used to indent template entry in script
+[`--noscope`](#--noscope) ignore scoped css, and treat it like usual css
+
+[`--alias`](#--alias) alias for import rewriting
+
+[`--dest`](#--dest) destination folder
+
+### --entry
+Starting point _directory_ from which `.vue` files will be targeted recursively
+
+Defaults to current directory
+```shell
+vue-sfc-split --entry=src
+```
+
+### --publicPath
+Directory where your `index.html` will live
+
+[Style attachment](#style-attachment) paths will be relative to this
+
+Defaults to same as entry
+```shell
+vue-sfc-split --publicPath=.
+```
 
 ### --ignore
 Comma separated list of glob patterns
 
 `node_modules` is always ignored
-```bash
+```shell
 vue-sfc-split --ignore=directory/*,directory-recursive/**
 ```
 
 ### --noscope
 If this is specified scoped css will have no effect, all styles will be treated as unscoped
-```bash
+```shell
 vue-sfc-split --noscope
+```
+
+### --alias
+Comma separated alias:replacement pairs to be rewritten in import statements
+
+Resulting paths will be relative to the current module
+```shell
+vue-sfc-split --alias=@:src/components
 ```
 
 ### --dest
@@ -69,7 +99,7 @@ Where the output files will go
 Default: `dest/`
 
 Set this to an empty string to create `.js` and `.css` files next to original `.vue` files
-```bash
+```shell
 vue-sfc-split --dest=""
 ```
 

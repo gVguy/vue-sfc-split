@@ -1,9 +1,9 @@
-import Two from './two.js'
-import DeeperTwo from './depth/two.js'
+import Two from 'two.js'
+import DeeperTwo from 'depth/two.js'
 
 export default {
   template: `
-<div class="container" data-scope-components-one>
+<div class="container" data-scope-example_input-components-one>
    <h1>{{text}}</h1>
    I have class <code>.container</code><br>
    with a silver background defined in scoped styles<br>
@@ -22,4 +22,4 @@ export default {
 }
 
 // attach styles
-fetch('components/one.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))
+fetch('example_input/components/one.css').then(res => res.text()).then(style => document.head.insertAdjacentHTML('beforeend', '<style>'+style+'</style>'))
