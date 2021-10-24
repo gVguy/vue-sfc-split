@@ -96,7 +96,7 @@ vue-sfc-split --alias=@:src/components
 ### --dest
 Where the output files will go
 
-Default: `dest/`
+Default: `dist/`
 
 Set this to an empty string to create `.js` and `.css` files next to original `.vue` files
 ```shell
