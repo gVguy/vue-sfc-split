@@ -122,11 +122,11 @@ div {
 Will get converted to this
 ```xml
 <div data-scope-hello>Hola</div>
-<style scoped>
+```
+```css
 div[data-scope-hello] {
   color: pink;
 }
-</style>
 ```
 This can be disabled by specifying `--noscope`
 
